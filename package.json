@@ -1,0 +1,25 @@
+{
+  "name": "removebgcypressio",
+  "version": "1.0.0",
+  "description": "Remove BG automation",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PoloBustillo/RemoveBGCypressIO.git"
+  },
+  "keywords": [
+    "cypresIO"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PoloBustillo/RemoveBGCypressIO/issues"
+  },
+  "homepage": "https://github.com/PoloBustillo/RemoveBGCypressIO#readme",
+  "devDependencies": {
+    "cypress": "^6.2.0"
+  }
+}
