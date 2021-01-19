@@ -1,1 +1,4 @@
 /node_modules/*
+/cypress/fixtures/downloads/*
+/cypress/fixtures/imgs/*
+/cypress/videos/*
