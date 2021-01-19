@@ -11,11 +11,58 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
+const fs = require("fs-extra");
+const path = require("path");
 
-/**
- * @type {Cypress.PluginConfig}
- */
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+  on("task", {
+    hello({ greeting, name }) {
+      console.log("%s, %s", greeting, name);
+
+      return null;
+    },
+    files() {
+      const downloadDirectory = path.join(
+        __dirname,
+        "..",
+        "/fixtures/downloads/imgs/"
+      );
+      console.log(downloadDirectory);
+      let array = [];
+      fs.readdirSync(downloadDirectory).forEach((file) => {
+        if (file !== "files.json") {
+          array.push({ file: file });
+          console.log(file);
+        }
+      });
+      return null;
+    },
+    fileRename({ oldName, newName }) {
+      const downloadDirectory = path.join(
+        __dirname,
+        "..",
+        "/fixtures/downloads/imgs/"
+      );
+
+      fs.copySync(downloadDirectory + oldName, downloadDirectory + newName);
+      fs.removeSync(downloadDirectory + oldName);
+
+      return null;
+    },
+  });
+
+  on("before:browser:launch", (browser = {}, launchOptions) => {
+    const downloadDirectory = path.join(
+      __dirname,
+      "..",
+      "fixtures/downloads/imgs"
+    );
+    if (browser.family === "chromium") {
+      launchOptions.preferences.default["download"] = {
+        default_directory: downloadDirectory,
+      };
+    }
+    return launchOptions;
+  });
+};
